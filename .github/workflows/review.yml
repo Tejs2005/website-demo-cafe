@@ -1,0 +1,22 @@
+name: Robin AI Review
+# $0 AI review using Tejas's API Nex (apinex.bond) free models.
+# Source: https://github.com/antongulin/robin (MIT)
+# Docs: https://www.robinreview.dev/
+# Needs repo secret: LLM_API_KEY
+permissions:
+  contents: read
+  pull-requests: write
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Robin review
+        uses: antongulin/robin/.github/workflows/review.yml@main
+        with:
+          LLM_BASE_URL: "https://api.apinex.bond/v1"
+          LLM_MODEL: "free/claude-sonnet-4.6"
+        secrets:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
